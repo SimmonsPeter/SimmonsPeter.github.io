@@ -8,30 +8,56 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- Welcome message -->
 <h1 class="text-center my-3">Bienvenu à tous les joueurs d'échec!</h1>
-<!--create a bootstrap card that will display an img -->
-<div class="text-center d-flex justify-content-center my-3">
-<div class="card" style="width: 18rem;">
-    <img src="https://images.unsplash.com/photo-1604948501466-4e9c339b9c24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Bienvenu à tous les joueurs d'échec!</h5>
-        <p class="card-text">Vous trouverez ici la liste de tous les joueurs de chaque ligue.</p>
-        <a href="players.html" class="btn btn-success">Voir les joueurs</a>
+<!-- Add a div that will center the cards and make them responsive using bootstrap 5 -->
+<div class="text-center  my-3 row  justify-content-center">
+    <!-- Add the first card -->
+    <div class="card m-3 d-flex flex-column" style="width: 18rem;">
+        <img src="https://images.unsplash.com/photo-1604948501466-4e9c339b9c24?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+             class="card-img-top" alt="...">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Bienvenu à tous les joueurs d'échec!</h5>
+            <p class="card-text">Vous trouverez ici la liste de tous les joueurs de chaque ligue.</p>
+            <a href="players.html" class="btn btn-success mt-auto">Voir les joueurs</a>
+        </div>
+    </div>
+    <!-- Add the second card -->
+    <div class="card m-3 d-flex flex-column" style="width: 18rem;">
+        <img src="https://images.unsplash.com/photo-1538221566857-f20f826391c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+             class="card-img-top" alt="...">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Joignez vous à nous!</h5>
+            <p class="card-text">Cliquez sur le bouton ci-dessous pour créer un nouveau joueur et .</p>
+            <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal"
+                    data-bs-target="#addPlayerModal">
+                Créer un nouveau joueur
+            </button>
+        </div>
+    </div>
+    <!-- Add the third card -->
+    <div class="card m-3 d-flex flex-column" style="width: 18rem;">
+        <img src="https://images.unsplash.com/photo-1528819622765-d6bcf132f793?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+             class="card-img-top" alt="...">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Gérer les joueurs</h5>
+            <p class="card-text">Cliquez sur les boutons ci-dessous pour modifier ou supprimer un joueur.</p>
+            <button type="button" class="btn btn-warning mt-auto mb-2" data-bs-toggle="modal"
+                    data-bs-target="#modifyPlayerModal">Modifier un Joueur</button>
+            <button type="button" class="btn btn-danger mt-auto" data-bs-toggle="modal"
+                    data-bs-target="#deletePlayerModal">
+                Supprimer un joueur
+            </button>
+        </div>
     </div>
 </div>
-</div>
 
-<!-- Button for adding a new player -->
-<!-- add a div that will center the add new player button -->
-<div class="text-center">
-<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
-    Créer un nouveau joueur
-</button>
-</div>
+
+
 <!-- Modal for adding a new player -->
 <div class="modal fade" id="addPlayerModal" tabindex="-1">
     <div class="modal-dialog">
@@ -43,20 +69,41 @@
             <div class="modal-body">
                 <form id="addPlayerForm">
                     <div class="mb-3">
+                        <label for="playerID" class="form-label">PlayerID</label>
+                        <input type="text" class="form-control" id="playerID" name="playerID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="playerName" class="form-label">Player Name</label>
-                        <input type="text" class="form-control" id="playerName" required>
+                        <input type="text" class="form-control" id="playerName" name="playerName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="playerRating" class="form-label">Player Rating</label>
-                        <input type="number" class="form-control" id="playerRating" required>
+                        <label for="playerRating" class="form-label">Player rating</label>
+                        <input type="number" class="form-control" id="playerRating" name="playerRating" required>
                     </div>
                     <div class="mb-3">
-                        <label for="playerLeague" class="form-label">Player League</label>
-                        <select class="form-select" id="playerLeague" required>
-                            <option value="bronze">Bronze League</option>
-                            <option value="silver">Silver League</option>
-                            <option value="gold">Gold League</option>
+                        <label for="playerCountry" class="form-label">Player country</label>
+                        <select class="form-select" id="playerCountry" name="playerCountry" required>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="fr">France</option>
+                            <option value="gb">United Kingdom</option>
+                            <option value="de">Germany</option>
+                            <option value="it">Italy</option>
+                            <option value="es">Spain</option>
+                            <option value="nl">Netherlands</option>
+                            <option value="br">Brazil</option>
+                            <option value="au">Australia</option>
+                            <option value="jp">Japan</option>
+                            <option value="cn">China</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="playerEmail" class="form-label">Player email</label>
+                        <input type="email" class="form-control" id="playerEmail" name="playerEmail" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -64,6 +111,88 @@
         </div>
     </div>
 </div>
+
+<!-- Modal for modifying a player -->
+<div class="modal fade" id="modifyPlayerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier un joueur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modifyPlayerForm">
+                    <div class="mb-3">
+                        <label for="existingPlayerID" class="form-label">PlayerID</label>
+                        <input type="text" class="form-control" id="existingPlayerID" name="existingPlayerID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="existingPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="existingPassword" name="existingPassword" required>
+                    </div> <!--add a demarkation to seperate the next fields from the previous ones -->
+                    <hr>
+                    <h4>Entrez les informations à modifier</h4>
+                    <div class="mb-3">
+                        <label for="newPlayerName" class="form-label">Player Name</label>
+                        <input type="text" class="form-control" id="newPlayerName" name="newPlayerName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPlayerRating" class="form-label">Player rating</label>
+                        <input type="number" class="form-control" id="newPlayerRating" name="newPlayerRating" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPlayerCountry" class="form-label">Player country</label>
+                        <select class="form-select" id="newPlayerCountry" name="newPlayerCountry" required>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="fr">France</option>
+                            <option value="gb">United Kingdom</option>
+                            <option value="de">Germany</option>
+                            <option value="it">Italy</option>
+                            <option value="es">Spain</option>
+                            <option value="nl">Netherlands</option>
+                            <option value="br">Brazil</option>
+                            <option value="au">Australia</option>
+                            <option value="jp">Japan</option>
+                            <option value="cn">China</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPlayerEmail" class="form-label">Player email</label>
+                        <input type="email" class="form-control" id="newPlayerEmail" name="newPlayerEmail" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for deleting a player -->
+<div class="modal fade" id="deletePlayerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Supprimer un joueur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="deletePlayerForm">
+                    <div class="mb-3">
+                        <label for="deletePlayerID" class="form-label">PlayerID</label>
+                        <input type="text" class="form-control" id="deletePlayerID" name="deletePlayerID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deletePassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="deletePassword" name="deletePassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Player cards -->
 <h2 class="text-center my-3">Best Players</h2>
 <div class="container">
