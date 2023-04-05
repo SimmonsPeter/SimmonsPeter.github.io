@@ -1,9 +1,9 @@
 $(document).ready(function () {
     getPlayers();
 
-    $("#addPlayerForm").submit(function (e) {
+    $("#addPlayerForm").submit(async function (e) {
         e.preventDefault();
-
+    
         let id = $("#playerID").val();
         let password = $("#password").val();
         let name = $("#playerName").val();
@@ -11,7 +11,7 @@ $(document).ready(function () {
         let country = $("#playerCountry").val();
         let email = $("#playerEmail").val();
 
-        if (validateInput(id, password, name, rating, country, email)) {
+        if (await validateInput(id, password, name, rating, country, email)) {
             addPlayer(id, password, name, rating, country, email);
         } 
     });
@@ -31,6 +31,23 @@ $(document).ready(function () {
             showValidationError("#idToDelete", "Remplissez tous les champs");           
         }
         
+    });
+
+    $("#modifyPlayerForm").submit(async function (e) {
+        e.preventDefault();
+    
+        let id = $("#existingPlayerID").val();
+        let password = $("#existingPassword").val();
+        let name = $("#newPlayerName").val();
+        let rating = $("#newPlayerRating").val();
+        let country = $("#newPlayerCountry").val();
+        let email = $("#newPlayerEmail").val();
+    
+        if (!name || !rating || !country || !email) {
+            showValidationError("#newPlayerEmail", "Remplissez tous les champs");
+        }else {
+            updatePlayer(id, password, name, rating, country, email);
+        }
     });
 });
 
@@ -95,8 +112,8 @@ function getPlayers() {
     });
 }
 
-// create a function that will program the soummettre button to add the player to the database based on the input values. we will include a validate function to check if the input values are valid or not. if the input values are valid, we will add the player to the database. if the input values are invalid, we will display an error message using bootstrap 5
-function validateInput(id, password, name, rating, country, email) {
+
+async function validateInput(id, password, name, rating, country, email) {
     let isValid = true;
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,}$/;
 
@@ -107,6 +124,12 @@ function validateInput(id, password, name, rating, country, email) {
     if (id === "") {
         showValidationError("#playerID", "L'ID ne peut pas être vide");
         isValid = false;
+    } else {
+        const usernameExists = await checkExistingUsername(id);
+        if (usernameExists) {
+            showValidationError("#playerID", "L'ID est déjà utilisé");
+            isValid = false;
+        }
     }
     if (password === "") {
         showValidationError("#password", "Le mot de passe ne peut pas être vide");
@@ -157,16 +180,15 @@ function addPlayer(id, password, name, rating, country, email) {
             // Store the player data in localStorage
             localStorage.setItem(id, JSON.stringify(data));
             
-            alert("Player added successfully");
+            alert("Joueur ajouté avec succès");
             $("#addPlayerModal").modal("hide");
         })
         .fail(function (error) {
-            alert("Error adding player");
+            alert("Une erreur s'est produite lors de l'ajout du joueur");
         });
 }
 
 
-//I want to add another function similar to addPlayer. It will use the Modifier un joueur button and its modal form to UPDATE an existing player from
 
 function deletePlayer(username, password, idToDelete) {
     const storedPlayer = JSON.parse(localStorage.getItem(username));
@@ -182,23 +204,79 @@ function deletePlayer(username, password, idToDelete) {
                     url: `https://641b49f71f5d999a44603cd2.mockapi.io/users/${playerData.id}`,
                     type: "DELETE",
                     success: function (response) {
-                        alert("Player deleted successfully");
+                        alert("Joueur supprimé avec succès");
                         $("#deletePlayerModal").modal("hide");
                         localStorage.removeItem(username);
                     },
                     error: function (error) {
-                        alert("Error deleting player");
+                        alert("Une erreur s'est produite lors de la suppression du joueur");
                     }
                 });
             } else {
-                alert("Player not found");
+                alert("Le joueur n'existe pas");
             }
         }).fail(function () {
-            alert("Could not fetch player data from the server");
+            alert("Une erreur s'est produite lors de la suppression du joueur");
         });
     } else {
-        alert("Access denied. You do not have permission to delete this player.");
+        alert("Accès refusé, vous n'êtes pas autorisé à supprimer ce joueur");
     }
+}
+
+function checkExistingUsername(username) {
+    return new Promise((resolve, reject) => {
+        $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${username}`, function (data) {
+            if (data && data.length > 0) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        }).fail(function () {
+            reject("Error checking existing username");
+        });
+    });
+}
+
+function updatePlayer(id, password, name, rating, country, email) {
+    // Fetch the player data to verify its existence and check the password
+    $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${id}`, function (playersData) {
+        if (playersData && playersData.length > 0) {
+            const playerData = playersData[0]; // Assuming unique usernames
+
+            if (playerData.password === password) {
+                const data = {
+                    username: id,
+                    password: password,
+                    name: name,
+                    playerRating: rating,
+                    Country: country,
+                    email: email,
+                };
+
+                // Send a PUT request to update the player
+                $.ajax({
+                    url: `https://641b49f71f5d999a44603cd2.mockapi.io/users/${playerData.id}`,
+                    type: "PUT",
+                    contentType: "application/json", // Set the content type to JSON
+                    data: JSON.stringify(data), // Convert the data object to a JSON string
+                    success: function (response) {
+                        localStorage.setItem(id, JSON.stringify(data));
+                        alert("Joueur mis à jour avec succès");
+                        $("#modifyPlayerModal").modal("hide");
+                    },
+                    error: function (error) {
+                        alert("Une erreur s'est produite lors de la mise à jour du joueur");
+                    }
+                });
+            } else {
+                alert("Accès refusé, mot de passe incorrect");
+            }
+        } else {
+            alert("Le joueur n'existe pas");
+        }
+    }).fail(function () {
+        alert("Une erreur s'est produite lors de la mise à jour du joueur");
+    });
 }
 
 
