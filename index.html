@@ -71,23 +71,23 @@
                 <form id="addPlayerForm">
                     <div class="mb-3">
                         <label for="playerID" class="form-label">Id du joueur</label>
-                        <input type="text" class="form-control" id="playerID" name="playerID" required>
+                        <input type="text" class="form-control" id="playerID" name="playerID">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="mb-3">
                         <label for="playerName" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="playerName" name="playerName" required>
+                        <input type="text" class="form-control" id="playerName" name="playerName">
                     </div>
                     <div class="mb-3">
                         <label for="playerRating" class="form-label">Classement</label>
-                        <input type="number" class="form-control" id="playerRating" name="playerRating" required>
+                        <input type="number" class="form-control" id="playerRating" name="playerRating">
                     </div>
                     <div class="mb-3">
                         <label for="playerCountry" class="form-label">Pays</label>
-                        <select class="form-select" id="playerCountry" name="playerCountry" required>
+                        <select class="form-select" id="playerCountry" name="playerCountry">
                             <option value="us">États-Unis</option>
                             <option value="ca">Canada</option>
                             <option value="fr">France</option>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="playerEmail" class="form-label">Courriel</label>
-                        <input type="email" class="form-control" id="playerEmail" name="playerEmail" required>
+                        <input type="email" class="form-control" id="playerEmail" name="playerEmail">
                     </div>
                     <button type="submit" class="btn btn-primary">Soummettre</button>
                 </form>
@@ -125,25 +125,25 @@
                 <form id="modifyPlayerForm">
                     <div class="mb-3">
                         <label for="existingPlayerID" class="form-label">Id du joueur</label>
-                        <input type="text" class="form-control" id="existingPlayerID" name="existingPlayerID" required>
+                        <input type="text" class="form-control" id="existingPlayerID" name="existingPlayerID" >
                     </div>
                     <div class="mb-3">
                         <label for="existingPassword" class="form-label">Mot de Passe</label>
-                        <input type="password" class="form-control" id="existingPassword" name="existingPassword" required>
+                        <input type="password" class="form-control" id="existingPassword" name="existingPassword" >
                     </div> 
                     <hr>
                     <h4>Entrez les informations à modifier</h4>
                     <div class="mb-3">
                         <label for="newPlayerName" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="newPlayerName" name="newPlayerName" required>
+                        <input type="text" class="form-control" id="newPlayerName" name="newPlayerName" >
                     </div>
                     <div class="mb-3">
                         <label for="newPlayerRating" class="form-label">Classement</label>
-                        <input type="number" class="form-control" id="newPlayerRating" name="newPlayerRating" required>
+                        <input type="number" class="form-control" id="newPlayerRating" name="newPlayerRating" >
                     </div>
                     <div class="mb-3">
                         <label for="newPlayerCountry" class="form-label">Pays</label>
-                        <select class="form-select" id="newPlayerCountry" name="newPlayerCountry" required>
+                        <select class="form-select" id="newPlayerCountry" name="newPlayerCountry" >
                             <option value="us">États-Unis</option>
                             <option value="ca">Canada</option>
                             <option value="fr">France</option>
@@ -159,8 +159,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="newPlayerEmail" class="form-label">Player email</label>
-                        <input type="email" class="form-control" id="newPlayerEmail" name="newPlayerEmail" required>
+                        <label for="newPlayerEmail" class="form-label">Courriel</label>
+                        <input type="email" class="form-control" id="newPlayerEmail" name="newPlayerEmail" >
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -181,15 +181,15 @@
                 <form id="deletePlayerForm">
                     <div class="mb-3">
                         <label for="deletePlayerID" class="form-label">Id</label>
-                        <input type="text" class="form-control" id="deletePlayerID" name="deletePlayerID" required>
+                        <input type="text" class="form-control" id="deletePlayerID" name="deletePlayerID" >
                     </div>
                     <div class="mb-3">
                         <label for="deletePassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="deletePassword" name="deletePassword" required>
+                        <input type="password" class="form-control" id="deletePassword" name="deletePassword" >
                     </div>
                     <div class="mb-3">
-                        <label for="deletePassword" class="form-label">Id du joueur à supprimer</label>
-                        <input type="password" class="form-control" id="deletePassword" name="deletePassword" required>
+                        <label for="idToDelete" class="form-label">Id du joueur à supprimer</label>
+                        <input type="text" class="form-control" id="idToDelete" name="idToDelete" >
                     </div>
                     <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>
