@@ -171,13 +171,15 @@ function addPlayer(id, password, name, rating, country, email) {
 function deletePlayer(username, password, idToDelete) {
     const storedPlayer = JSON.parse(localStorage.getItem(username));
 
-    if ((storedPlayer && storedPlayer.id === idToDelete) || (username === "ADMIN" && password === "ADMIN")) {
+    if ((storedPlayer && storedPlayer.username === idToDelete) || (username === "ADMIN" && password === "ADMIN")) {
         // Fetch the player data to verify its existence
-        $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users/${idToDelete}`, function (playerData) {
-            if (playerData) {
+        $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${idToDelete}`, function (playersData) {
+            if (playersData && playersData.length > 0) {
+                const playerData = playersData[0]; // Assuming unique usernames
+
                 // Send a DELETE request to delete the player
                 $.ajax({
-                    url: `https://641b49f71f5d999a44603cd2.mockapi.io/users/${idToDelete}`,
+                    url: `https://641b49f71f5d999a44603cd2.mockapi.io/users/${playerData.id}`,
                     type: "DELETE",
                     success: function (response) {
                         alert("Player deleted successfully");
@@ -198,6 +200,7 @@ function deletePlayer(username, password, idToDelete) {
         alert("Access denied. You do not have permission to delete this player.");
     }
 }
+
 
 
 
