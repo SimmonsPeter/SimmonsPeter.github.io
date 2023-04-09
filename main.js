@@ -1,9 +1,13 @@
+// Attend que le DOM soit prêt pour lancer les actions
 $(document).ready(function () {
+    // Récupère les joueurs à partir de l'API et les affiche
     getPlayers();
 
+    // Formulaire d'ajout de joueur
     $("#addPlayerForm").submit(async function (e) {
         e.preventDefault();
     
+        // Récupère les valeurs du formulaire
         let id = $("#playerID").val();
         let password = $("#password").val();
         let name = $("#playerName").val();
@@ -11,19 +15,23 @@ $(document).ready(function () {
         let country = $("#playerCountry").val();
         let email = $("#playerEmail").val();
 
+        // Valide les entrées et ajoute le joueur si elles sont valides
         if (await validateInput(id, password, name, rating, country, email)) {
             addPlayer(id, password, name, rating, country, email);
         } 
     });
 
+    // Formulaire de suppression de joueur
     $("#deletePlayerForm").submit(function (e) {
         e.preventDefault();
     
+        // Récupère les valeurs du formulaire
         let username = $("#deletePlayerID").val();
         let password = $("#deletePassword").val();
         let idToDelete = $("#idToDelete").val();
         
 
+        // Supprime le joueur si les champs sont remplis
         if (username!=="" || password!=="" || idToDelete!=="") {
             deletePlayer(username, password,idToDelete);
         }else{
@@ -33,9 +41,11 @@ $(document).ready(function () {
         
     });
 
+    // Formulaire de modification de joueur
     $("#modifyPlayerForm").submit(async function (e) {
         e.preventDefault();
     
+        // Récupère les valeurs du formulaire
         let id = $("#existingPlayerID").val();
         let password = $("#existingPassword").val();
         let name = $("#newPlayerName").val();
@@ -43,6 +53,7 @@ $(document).ready(function () {
         let country = $("#newPlayerCountry").val();
         let email = $("#newPlayerEmail").val();
     
+        // Modifie le joueur si tous les champs sont remplis
         if (!name || !rating || !country || !email) {
             showValidationError("#newPlayerEmail", "Remplissez tous les champs");
         }else {
@@ -51,6 +62,7 @@ $(document).ready(function () {
     });
 });
 
+// Classe Player pour représenter un joueur
 class Player {
     constructor(playerName, playerCountry, playerRating) {
         this.playerName = playerName;
@@ -59,18 +71,21 @@ class Player {
     }
 }
 
+// Récupère les joueurs à partir de l'API et les affiche
 function getPlayers() {
     $.get("https://641b49f71f5d999a44603cd2.mockapi.io/users", function (data) {
-        var bestBronzeLeaguePlayer = null;
-        var bestSilverLeaguePlayer = null;
-        var bestGoldLeaguePlayer = null;
+        let bestBronzeLeaguePlayer = null;
+        let bestSilverLeaguePlayer = null;
+        let bestGoldLeaguePlayer = null;
 
+         // Parcourt les joueurs et les classe dans les ligues correspondantes
         $.each(data, function (index, playerData) {
-            var player = new Player(playerData.name, playerData.Country, playerData.playerRating
+            let player = new Player(playerData.name, playerData.Country, playerData.playerRating
 
 
             );
 
+             // Classe les joueurs selon leur classement
             if (player.playerRating <= 999) {
                 if (!bestBronzeLeaguePlayer || player.playerRating > bestBronzeLeaguePlayer.playerRating) {
                     bestBronzeLeaguePlayer = player;
@@ -86,6 +101,7 @@ function getPlayers() {
             }
         });
 
+        // Affiche les meilleurs joueurs de chaque ligue
         if (bestBronzeLeaguePlayer) {
             $('#bestBronzePlayer').html(
                 `Name: ${bestBronzeLeaguePlayer.playerName}<br>
