@@ -22,6 +22,16 @@ $(document).ready(function () {
         hideValidationError("#playerRating");
     });
     
+    $("#existingPlayerID").on("blur", async function () {
+        const id = $(this).val();
+        if (id !== "") {
+            const playerData = await getPlayerDataById(id);
+            if (playerData) {
+                fillModifyPlayerForm(playerData);
+            }
+        }
+    });
+    
     // Formulaire d'ajout de joueur
     $("#addPlayerForm").submit(async function (e) {
         e.preventDefault();
@@ -146,6 +156,28 @@ function getPlayers() {
             );
         }
     });
+}
+
+async function getPlayerDataById(id) {
+    try {
+        const response = await $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${id}`);
+        if (response && response.length > 0) {
+            return response[0]; // Assuming unique usernames
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching player data", error);
+        return null;
+    }
+}
+
+function fillModifyPlayerForm(playerData) {
+    $("#existingPassword").val(playerData.password);
+    $("#newPlayerName").val(playerData.name);
+    $("#newPlayerRating").val(playerData.playerRating);
+    $("#newPlayerCountry").val(playerData.Country);
+    $("#newPlayerEmail").val(playerData.email);
 }
 
 
