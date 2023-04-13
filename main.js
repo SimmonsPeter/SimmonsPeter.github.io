@@ -62,11 +62,13 @@ $(document).ready(function () {
         
 
         // Supprime le joueur si les champs sont remplis
-        if (username!=="" || password!=="" || idToDelete!=="") {
-            deletePlayer(username, password,idToDelete);
-        }else{
-        
-            showValidationError("#idToDelete", "Remplissez tous les champs");           
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce joueur ?")) {
+            // Supprime le joueur si les champs sont remplis
+            if (username!=="" || password!=="" || idToDelete!=="") {
+                deletePlayer(username, password,idToDelete);
+            }else{
+                showValidationError("#idToDelete", "Remplissez tous les champs");           
+            }
         }
         
     });
