@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ligue d'échec</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
@@ -64,29 +65,30 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Créer un nouveau joueur</h5>
+                <h5 class="modal-title">Créer un nouveau joueur</h5>                
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <p id="champsObl" class="ms-3">Les champs avec * sont obligatoires.</p>
             <div class="modal-body">
                 <form id="addPlayerForm">
                     <div class="mb-3">
-                        <label for="playerID" class="form-label">Id du joueur</label>
+                        <label for="playerID" class="form-label">*Id du joueur</label>
                         <input type="text" class="form-control" id="playerID" name="playerID">
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Mot de passe</label>
+                        <label for="password" class="form-label">*Mot de passe</label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="mb-3">
-                        <label for="playerName" class="form-label">Nom</label>
+                        <label for="playerName" class="form-label">*Nom</label>
                         <input type="text" class="form-control" id="playerName" name="playerName">
                     </div>
                     <div class="mb-3">
-                        <label for="playerRating" class="form-label">Classement</label>
+                        <label for="playerRating" class="form-label">*Classement</label>
                         <input type="number" class="form-control" id="playerRating" name="playerRating">
                     </div>
                     <div class="mb-3">
-                        <label for="playerCountry" class="form-label">Pays</label>
+                        <label for="playerCountry" class="form-label">*Pays</label>
                         <select class="form-select" id="playerCountry" name="playerCountry">
                             <option value="us">États-Unis</option>
                             <option value="ca">Canada</option>
@@ -103,7 +105,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="playerEmail" class="form-label">Courriel</label>
+                        <label for="playerEmail" class="form-label">*Courriel</label>
                         <input type="email" class="form-control" id="playerEmail" name="playerEmail">
                     </div>
                     <button type="submit" class="btn btn-primary">Soummettre</button>

@@ -2,7 +2,26 @@
 $(document).ready(function () {
     // Récupère les joueurs à partir de l'API et les affiche
     getPlayers();
-
+    $("#playerID").on("input", function () {
+        hideValidationError("#playerID");
+    });
+    
+    $("#password").on("input", function () {
+        hideValidationError("#password");
+    });
+    
+    $("#playerName").on("input", function () {
+        hideValidationError("#playerName");
+    });
+    
+    $("#playerEmail").on("input", function () {
+        hideValidationError("#playerEmail");
+    });
+    
+    $("#playerRating").on("input", function () {
+        hideValidationError("#playerRating");
+    });
+    
     // Formulaire d'ajout de joueur
     $("#addPlayerForm").submit(async function (e) {
         e.preventDefault();
@@ -18,7 +37,8 @@ $(document).ready(function () {
         // Valide les entrées et ajoute le joueur si elles sont valides
         if (await validateInput(id, password, name, rating, country, email)) {
             addPlayer(id, password, name, rating, country, email);
-        } 
+        }
+    
     });
 
     // Formulaire de suppression de joueur
@@ -177,8 +197,14 @@ async function validateInput(id, password, name, rating, country, email) {
 }
 
 function showValidationError(elementSelector, errorMessage) {
-    $(elementSelector).after(`<div class="validation-error text-danger mt-1">${errorMessage}</div>`);
+    $(elementSelector).addClass("is-invalid");
+    $(elementSelector).after(`<div class="validation-error text-danger mt-1"><i class="fas fa-times"></i> ${errorMessage}</div>`);
 }
+function hideValidationError(elementSelector) {
+    $(elementSelector).removeClass("is-invalid");
+    $(elementSelector).next(".validation-error").remove();
+}
+
 
 
 function addPlayer(id, password, name, rating, country, email) {
