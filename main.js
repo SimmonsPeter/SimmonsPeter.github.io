@@ -103,7 +103,14 @@ class Player {
     }
 }
 
-// Récupère les joueurs à partir de l'API et les affiche
+/*
+Rôle: La fonction getPlayers récupère la liste des joueurs à partir d'une API et affiche le meilleur joueur de chaque ligue (bronze, argent et or) sur la page HTML.
+Description des paramètres:
+Aucun paramètre n'est requis pour cette fonction.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur, mais elle met à jour le contenu de la page HTML avec les informations
+des meilleurs joueurs de chaque ligue.
+*/
 function getPlayers() {
     $.get("https://641b49f71f5d999a44603cd2.mockapi.io/users", function (data) {
         let bestBronzeLeaguePlayer = null;
@@ -160,6 +167,14 @@ function getPlayers() {
     });
 }
 
+/*
+Rôle: La fonction getPlayerDataById récupère les données d'un joueur en fonction de son identifiant (ID) à partir d'une API.
+Description des paramètres:
+id (String|Number): L'identifiant (ID) du joueur dont les données doivent être récupérées.
+Valeurs retournées:
+Cette fonction retourne une promesse qui résout les données du joueur si la requête est réussie, ou null en cas d'échec.
+Si aucune donnée correspondante n'est trouvée, la promesse résout également null.
+*/
 async function getPlayerDataById(id) {
     try {
         const response = await $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${id}`);
@@ -174,6 +189,13 @@ async function getPlayerDataById(id) {
     }
 }
 
+/*
+Rôle: La fonction fillModifyPlayerForm remplit un formulaire de modification de joueur avec les données existantes d'un joueur.
+Description des paramètres:
+playerData (Object): Un objet contenant les données du joueur à utiliser pour remplir le formulaire.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle met à jour les éléments du formulaire avec les données du joueur.
+*/
 function fillModifyPlayerForm(playerData) {
     $("#existingPassword").val(playerData.password);
     $("#newPlayerName").val(playerData.name);
@@ -182,7 +204,18 @@ function fillModifyPlayerForm(playerData) {
     $("#newPlayerEmail").val(playerData.email);
 }
 
-
+/*
+Rôle: La fonction validateInput valide les données saisies par l'utilisateur pour le formulaire d'ajout/modification d'un joueur.
+Description des paramètres:
+id (String): L'ID du joueur.
+password (String): Le mot de passe du joueur.
+name (String): Le nom du joueur.
+rating (Number): Le classement du joueur.
+country (String): Le pays du joueur.
+email (String): L'adresse e-mail du joueur.
+Valeurs retournées:
+Cette fonction retourne un booléen qui indique si les données sont valides (true) ou non (false).
+*/
 async function validateInput(id, password, name, rating, country, email) {
     let isValid = true;
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,}$/;
@@ -230,17 +263,44 @@ async function validateInput(id, password, name, rating, country, email) {
     return isValid;
 }
 
+/*
+Rôle: La fonction showValidationError affiche un message d'erreur de validation pour un élément de formulaire spécifié.
+Description des paramètres:
+elementSelector (String): Le sélecteur CSS de l'élément de formulaire pour lequel afficher le message d'erreur.
+errorMessage (String): Le message d'erreur à afficher.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle ajoute une classe "is-invalid" à l'élément ciblé et insère un message d'erreur après celui-ci.
+*/
 function showValidationError(elementSelector, errorMessage) {
     $(elementSelector).addClass("is-invalid");
     $(elementSelector).after(`<div class="validation-error text-danger mt-1"><i class="fas fa-times"></i> ${errorMessage}</div>`);
 }
+
+/*
+Rôle: La fonction hideValidationError masque le message d'erreur de validation pour un élément de formulaire spécifié.
+Description des paramètres:
+elementSelector (String): Le sélecteur CSS de l'élément de formulaire pour lequel masquer le message d'erreur.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle supprime la classe "is-invalid" de l'élément ciblé et retire le message d'erreur associé.
+*/
 function hideValidationError(elementSelector) {
     $(elementSelector).removeClass("is-invalid");
     $(elementSelector).next(".validation-error").remove();
 }
 
 
-
+/*
+Rôle: La fonction addPlayer ajoute un nouveau joueur à la liste des joueurs en envoyant une requête POST à l'API et stocke les données du joueur dans le localStorage.
+Description des paramètres:
+id (String): L'ID du joueur à ajouter.
+password (String): Le mot de passe du joueur à ajouter.
+name (String): Le nom du joueur à ajouter.
+rating (Number): Le classement du joueur à ajouter.
+country (String): Le pays du joueur à ajouter.
+email (String): L'adresse e-mail du joueur à ajouter.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle envoie une requête POST à l'API et affiche une alerte pour informer l'utilisateur si l'ajout est réussi ou échoué.
+*/
 function addPlayer(id, password, name, rating, country, email) {
     const data = {
         username: id,
@@ -265,7 +325,15 @@ function addPlayer(id, password, name, rating, country, email) {
 }
 
 
-
+/*
+Rôle: La fonction deletePlayer supprime un joueur de la liste des joueurs si les informations d'identification fournies sont correctes.
+Description des paramètres:
+username (String): Le nom d'utilisateur de l'utilisateur actuellement connecté.
+password (String): Le mot de passe de l'utilisateur actuellement connecté.
+idToDelete (String): L'ID du joueur à supprimer.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle envoie une requête DELETE à l'API et affiche une alerte pour informer l'utilisateur si la suppression est réussie ou échouée.
+*/
 function deletePlayer(username, password, idToDelete) {
     const storedPlayer = JSON.parse(localStorage.getItem(username));
 
@@ -299,6 +367,15 @@ function deletePlayer(username, password, idToDelete) {
     }
 }
 
+/*
+Rôle: La fonction deletePlayer supprime un joueur de la liste des joueurs si les informations d'identification fournies sont correctes.
+Description des paramètres:
+username (String): Le nom d'utilisateur de l'utilisateur actuellement connecté.
+password (String): Le mot de passe de l'utilisateur actuellement connecté.
+idToDelete (String): L'ID du joueur à supprimer.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle envoie une requête DELETE à l'API et affiche une alerte pour informer l'utilisateur si la suppression est réussie ou échouée.
+*/
 function checkExistingUsername(username) {
     return new Promise((resolve, reject) => {
         $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${username}`, function (data) {
@@ -313,6 +390,18 @@ function checkExistingUsername(username) {
     });
 }
 
+/*
+Rôle: La fonction updatePlayer met à jour les informations d'un joueur existant si le mot de passe fourni est correct.
+Description des paramètres:
+id (String): L'ID du joueur à mettre à jour.
+password (String): Le mot de passe actuel du joueur à mettre à jour.
+name (String): Le nouveau nom du joueur.
+rating (Number): Le nouveau classement du joueur.
+country (String): Le nouveau pays du joueur.
+email (String): La nouvelle adresse e-mail du joueur.
+Valeurs retournées:
+Cette fonction ne retourne pas de valeur. Elle envoie une requête PUT à l'API et affiche une alerte pour informer l'utilisateur si la mise à jour est réussie ou échouée.
+*/
 function updatePlayer(id, password, name, rating, country, email) {
     // Fetch the player data to verify its existence and check the password
     $.get(`https://641b49f71f5d999a44603cd2.mockapi.io/users?search=${id}`, function (playersData) {
